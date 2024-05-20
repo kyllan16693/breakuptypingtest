@@ -43,8 +43,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 const endTime = new Date().getTime();
                 typingArea.disabled = true;
                 const timeTaken = (endTime - startTime) / 1000;
-                result.textContent = `You completed the test in ${timeTaken} seconds.`;
+                const words = typingPrompt.innerText.split(' ').length;
+                const wpm = (words / timeTaken) * 60;
+                const bpm = (1 / timeTaken) * 60;
+                result.textContent = `You completed the test in ${timeTaken.toFixed(2)} seconds. WPM: ${wpm.toFixed(2)}, BPM: ${bpm.toFixed(2)}.`;
                 console.log(`Test completed in: ${timeTaken} seconds`); // Log the completion time
+                console.log(`Words per minute: ${wpm.toFixed(2)}`); // Log the words per minute
+                console.log(`Breakups per minute: ${bpm.toFixed(2)}`); // Log the breakups per minute
                 // Server request
             }
         }

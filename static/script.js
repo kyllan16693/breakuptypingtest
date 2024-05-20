@@ -1,40 +1,50 @@
 document.addEventListener('DOMContentLoaded', () => {
     const initialPrompt = document.getElementById('initialPrompt');
+    const nameInput = document.getElementById('nameInput');
     const typingPrompt = document.getElementById('typingPrompt');
     const typingArea = document.getElementById('typingArea');
     const result = document.getElementById('result');
 
+    if (!nameInput) {
+        console.error('nameInput element not found');
+        return;
+    }
+
     let startTime;
     let name = '';
 
-    typingArea.addEventListener('keydown', (event) => {
-        if (event.key === 'Enter' && name === '') {
+    function getTypingPrompt() {
+        // Dummy function that returns a static sentence
+        return 'The quick brown fox jumps over the lazy dog.';
+    }
+
+    nameInput.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' && nameInput.value.trim() !== '') {
             event.preventDefault();
-            const typedText = typingArea.value.trim();
-            const match = typedText.match(/^Dear (\w+),$/);
-            if (match) {
-                name = match[1];
-                console.log(`Name: ${name}`); // Log the name
-                typingArea.value = '';
-                initialPrompt.style.display = 'none';
-                typingPrompt.style.display = 'block';
-                typingArea.focus();
-                startTime = new Date().getTime();
-                console.log(`Test started at: ${new Date(startTime).toLocaleString()}`); // Log the start time
-            } else {
-                result.textContent = 'Please start with "Dear [name],".';
-            }
+            name = nameInput.value.trim();
+            console.log(`Name: ${name}`); // Log the name
+            nameInput.style.display = 'none';
+            initialPrompt.style.display = 'none';
+            typingPrompt.style.display = 'block';
+            typingPrompt.innerText = getTypingPrompt();
+            typingArea.placeholder = typingPrompt.innerText;
+            typingArea.readOnly = false;
+            typingArea.focus();
+            startTime = new Date().getTime();
+            console.log(`Test started at: ${new Date(startTime).toLocaleString()}`); // Log the start time
         }
     });
 
     typingArea.addEventListener('input', () => {
         if (name !== '') {
             const typedText = typingArea.value;
+            console.log(`Typed text: ${typedText}`); // Log the typed text
             if (typedText === typingPrompt.innerText) {
                 const endTime = new Date().getTime();
                 typingArea.disabled = true;
                 const timeTaken = (endTime - startTime) / 1000;
                 result.textContent = `You completed the test in ${timeTaken} seconds.`;
+                console.log(`Test completed in: ${timeTaken} seconds`); // Log the completion time
                 // Server request
             }
         }

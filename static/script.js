@@ -152,8 +152,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     if (navigator.share) {
                         navigator.share({
                             title: 'Breakup Message',
-                            text: breakupMessage,
-                            url: window.location.href
+                            text: breakupMessage
                         }).then(() => {
                             console.log('Sharing successful');
                         }).catch((error) => {
@@ -173,8 +172,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     if (navigator.share) {
                         navigator.share({
                             title: 'Typing Test Stats',
-                            text: statsMessage,
-                            url: window.location.href
+                            text: statsMessage
                         }).then(() => {
                             console.log('Sharing successful');
                         }).catch((error) => {

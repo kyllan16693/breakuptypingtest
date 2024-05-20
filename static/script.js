@@ -49,7 +49,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const newTestButton = document.createElement('button');
     newTestButton.textContent = 'Take a New Test';
+    newTestButton.classList.add('styled-button');  // Add the class
     newTestButtonContainer.appendChild(newTestButton);
+    
+    
 
     async function fetchTypingPrompt(key = null) {
         try {
@@ -128,6 +131,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             const lastWord = promptWords[typedWords.length - 1];
 
             if (typedWords.length === promptWords.length && lastWordTyped && lastWordTyped.length >= lastWord.length) {
+                newTestButton.remove();
                 const endTime = new Date().getTime();
                 typingArea.disabled = true;
                 const timeTaken = (endTime - startTime) / 1000;

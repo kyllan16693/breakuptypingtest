@@ -5,14 +5,41 @@ document.addEventListener('DOMContentLoaded', async () => {
     const typingPrompt = document.getElementById('typingPrompt');
     const typingArea = document.getElementById('typingArea');
     const result = document.getElementById('result');
-    const shareButton = document.getElementById('shareButton');
+    const buttonContainer = document.createElement('div');
 
     let startTime;
     let name = '';
     let promptKey = '';
     let promptText = '';
 
-    // Fetch the typing prompt from the server
+    buttonContainer.id = 'buttonContainer';
+    buttonContainer.style.display = 'none';
+    buttonContainer.style.marginTop = '20px';
+    document.querySelector('.container').appendChild(buttonContainer);
+
+    const shareBreakupButton = document.createElement('button');
+    shareBreakupButton.textContent = 'Share Breakup';
+    shareBreakupButton.style.marginRight = '10px';
+    buttonContainer.appendChild(shareBreakupButton);
+
+    const shareStatsButton = document.createElement('button');
+    shareStatsButton.textContent = 'Share Stats';
+    shareStatsButton.style.marginRight = '10px';
+    buttonContainer.appendChild(shareStatsButton);
+
+    const takeAnotherTestButton = document.createElement('button');
+    takeAnotherTestButton.textContent = 'Take Another Test';
+    buttonContainer.appendChild(takeAnotherTestButton);
+
+    const newTestButtonContainer = document.createElement('div');
+    newTestButtonContainer.style.display = 'none';
+    newTestButtonContainer.style.marginTop = '20px';
+    document.querySelector('.container').appendChild(newTestButtonContainer);
+
+    const newTestButton = document.createElement('button');
+    newTestButton.textContent = 'Take a New Test';
+    newTestButtonContainer.appendChild(newTestButton);
+
     async function fetchTypingPrompt(key = null) {
         try {
             const response = await fetch(key ? `/prompt/${key}` : '/prompt');
@@ -26,10 +53,16 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
-    // Check if there is a key in the URL
     const urlParams = new URLSearchParams(window.location.search);
     const key = urlParams.get('key');
     await fetchTypingPrompt(key);
+
+    if (key) {
+        newTestButtonContainer.style.display = 'block';
+        newTestButton.addEventListener('click', () => {
+            window.location.href = window.location.origin;
+        });
+    }
 
     nameInput.addEventListener('keydown', (event) => {
         if (event.key === 'Enter' && nameInput.value.trim() !== '') {
@@ -54,7 +87,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             const promptWords = promptText.split(' ');
             const typedWords = typedText.trim().split(' ');
 
-            // Highlight the typed words
             const promptSpans = typingPrompt.querySelectorAll('span');
             let correctCount = 0;
 
@@ -82,7 +114,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             const lastWordTyped = typedWords[typedWords.length - 1];
             const lastWord = promptWords[typedWords.length - 1];
 
-            // Check if the last word is completely typed
             if (typedWords.length === promptWords.length && lastWordTyped && lastWordTyped.length >= lastWord.length) {
                 const endTime = new Date().getTime();
                 typingArea.disabled = true;
@@ -96,17 +127,30 @@ document.addEventListener('DOMContentLoaded', async () => {
                 console.log(`Words per minute: ${wpm.toFixed(2)}`); // Log the words per minute
                 console.log(`Breakups per minute: ${bpm.toFixed(2)}`); // Log the breakups per minute
                 console.log(`Accuracy: ${accuracy.toFixed(2)}%`); // Log the accuracy
-                shareButton.style.display = 'block'; // Show the share button
+                buttonContainer.style.display = 'block'; // Show the buttons
+
+                shareBreakupButton.addEventListener('click', () => {
+                    const breakupMessage = `${promptText}\n\nCheck out this breakup typing test at breakuptypingtest.com?prompt=${promptKey}`;
+                    navigator.clipboard.writeText(breakupMessage).then(() => {
+                        alert('Breakup message copied to clipboard!');
+                    }).catch(err => {
+                        console.error('Error copying message:', err);
+                    });
+                });
+
+                shareStatsButton.addEventListener('click', () => {
+                    const statsMessage = `WPM: ${wpm.toFixed(2)}, BPM: ${bpm.toFixed(2)}, Accuracy: ${accuracy.toFixed(2)}%\n\nCheck out this breakup typing test at breakuptypingtest.com?prompt=${promptKey}`;
+                    navigator.clipboard.writeText(statsMessage).then(() => {
+                        alert('Stats copied to clipboard!');
+                    }).catch(err => {
+                        console.error('Error copying stats:', err);
+                    });
+                });
+
+                takeAnotherTestButton.addEventListener('click', () => {
+                    window.location.reload();
+                });
             }
         }
-    });
-
-    shareButton.addEventListener('click', () => {
-        const shareLink = `${window.location.origin}/?key=${promptKey}`;
-        navigator.clipboard.writeText(shareLink).then(() => {
-            alert('Share link copied to clipboard!');
-        }).catch(err => {
-            console.error('Error copying link:', err);
-        });
     });
 });

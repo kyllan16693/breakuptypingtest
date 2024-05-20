@@ -28,6 +28,8 @@ main {
     justify-content: center;
     align-items: center;
     width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
 .container {
@@ -36,7 +38,8 @@ main {
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     text-align: center;
-    width: 600px;
+    width: 100%;
+    max-width: 600px;
     margin: 20px;
 }
 
@@ -52,6 +55,35 @@ main {
     margin-right: 5px;
 }
 
+#typingPromptContainer {
+    font-size: 18px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+#typingPrompt {
+    background-color: #3e3e3e;
+    padding: 10px;
+    border-radius: 5px;
+    color: #888;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: left;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+.correct {
+    color: #00ff00;
+}
+
+.incorrect {
+    color: #ff4d4d;
+}
+
 #nameInput, #typingArea {
     width: 100%;
     padding: 10px;
@@ -62,6 +94,7 @@ main {
     background-color: #3e3e3e;
     margin-bottom: 20px;
     outline: none;
+    box-sizing: border-box;
 }
 
 #typingArea {
@@ -78,6 +111,21 @@ main {
     font-size: 18px;
     font-weight: bold;
     color: #ff4d4d;
+}
+
+#shareButton {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #ff4d4d;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#shareButton:hover {
+    background-color: #e63e3e;
 }
 
 footer {

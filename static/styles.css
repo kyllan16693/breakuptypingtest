@@ -40,9 +40,16 @@ main {
     margin: 20px;
 }
 
-#initialPrompt, #typingPrompt {
+#initialPrompt {
     font-size: 18px;
     margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#initialPrompt span {
+    margin-right: 5px;
 }
 
 #nameInput, #typingArea {

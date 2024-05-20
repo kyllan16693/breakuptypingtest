@@ -6,6 +6,4 @@ services:
     ports:
       - "6512:5000"
     volumes:
-      - .:/app
-    environment:
-      - FLASK_ENV=development
+      - .:/app #Remove mount for release.

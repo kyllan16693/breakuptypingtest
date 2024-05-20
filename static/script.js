@@ -130,7 +130,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 buttonContainer.style.display = 'block'; // Show the buttons
 
                 shareBreakupButton.addEventListener('click', () => {
-                    const breakupMessage = `${promptText}\n\nCheck out this breakup typing test at breakuptypingtest.com?prompt=${promptKey}`;
+                    const breakupMessage = `Dear ${name},\n\n${promptText}\n\nBreakup written in ${timeTaken.toFixed(2)} seconds.${window.location.href}?key=${promptKey}`;
                     navigator.clipboard.writeText(breakupMessage).then(() => {
                         alert('Breakup message copied to clipboard!');
                     }).catch(err => {
@@ -139,7 +139,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 });
 
                 shareStatsButton.addEventListener('click', () => {
-                    const statsMessage = `WPM: ${wpm.toFixed(2)}, BPM: ${bpm.toFixed(2)}, Accuracy: ${accuracy.toFixed(2)}%\n\nCheck out this breakup typing test at breakuptypingtest.com?prompt=${promptKey}`;
+                    const statsMessage = `WPM: ${wpm.toFixed(2)}, BPM: ${bpm.toFixed(2)}, Accuracy: ${accuracy.toFixed(2)}%\n\nCheck out this breakup typing test at ${window.location.href}?key=${promptKey}`;
                     navigator.clipboard.writeText(statsMessage).then(() => {
                         alert('Stats copied to clipboard!');
                     }).catch(err => {

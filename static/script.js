@@ -171,4 +171,47 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
         }
     });
+
+    shareBreakupButton.addEventListener('click', () => {
+        const breakupMessage = `Dear ${name},\n\n${promptText}\n\nBreakup written in ${timeTaken.toFixed(2)} seconds.${window.location.href}?key=${promptKey}`;
+        if (navigator.share) {
+            navigator.share({
+                title: 'Breakup Typing Test',
+                text: breakupMessage,
+                url: window.location.href
+            }).then(() => {
+                console.log('Successful share');
+            }).catch((error) => {
+                console.error('Error sharing:', error);
+            });
+        } else {
+            navigator.clipboard.writeText(breakupMessage).then(() => {
+                alert('Breakup message copied to clipboard!');
+            }).catch(err => {
+                console.error('Error copying message:', err);
+            });
+        }
+    });
+    
+    shareStatsButton.addEventListener('click', () => {
+        const statsMessage = `WPM: ${wpm.toFixed(2)}, BPM: ${bpm.toFixed(2)}, Accuracy: ${accuracy.toFixed(2)}%\n\nCheck out this breakup typing test at ${window.location.href}?key=${promptKey}`;
+        if (navigator.share) {
+            navigator.share({
+                title: 'Breakup Typing Test Stats',
+                text: statsMessage,
+                url: window.location.href
+            }).then(() => {
+                console.log('Successful share');
+            }).catch((error) => {
+                console.error('Error sharing:', error);
+            });
+        } else {
+            navigator.clipboard.writeText(statsMessage).then(() => {
+                alert('Stats copied to clipboard!');
+            }).catch(err => {
+                console.error('Error copying stats:', err);
+            });
+        }
+    });
+    
 });

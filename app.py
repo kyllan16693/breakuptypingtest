@@ -1,7 +1,7 @@
 import os
 import random
 import hashlib
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template, jsonify, request
 
 app = Flask(__name__)
 
@@ -29,10 +29,26 @@ def home():
 
 @app.route('/prompt')
 def get_prompt():
-    random_lines = [random.choice(lines).strip() for lines in prompts]
+    random_indices = [random.randint(0, len(lines) - 1) for lines in prompts]
+    random_lines = [prompts[i][index].strip() for i, index in enumerate(random_indices)]
     concatenated_prompt = ' '.join(random_lines)
     
-    hex_key = hashlib.sha256(concatenated_prompt.encode()).hexdigest()
+    hex_key = ''.join(f'{index:02x}' for index in random_indices)
+    
+    return jsonify({
+        'prompt': concatenated_prompt,
+        'key': hex_key
+    })
+
+@app.route('/prompt/<hex_key>')
+def get_prompt_from_key(hex_key):
+    indices = [int(hex_key[i:i+2], 16) for i in range(0, len(hex_key), 2)]
+    
+    if len(indices) != 4 or any(index >= len(prompts[i]) for i, index in enumerate(indices)):
+        return jsonify({'error': 'Invalid hex key'}), 400
+    
+    random_lines = [prompts[i][index].strip() for i, index in enumerate(indices)]
+    concatenated_prompt = ' '.join(random_lines)
     
     return jsonify({
         'prompt': concatenated_prompt,

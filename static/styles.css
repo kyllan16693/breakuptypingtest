@@ -123,9 +123,20 @@ main {
 }
 
 #typingArea {
-    height: 100px;
-    resize: none;
+    display: none;  /* Hide the text area initially */
+    width: 100%;
+    padding: 10px;
+    padding-right: 20px;
+    border: 0px solid #ff4d4d;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #f0f0f0;
+    background-color: #3e3e3e;
+    margin-bottom: 20px;
+    outline: none;
+    box-sizing: border-box;
 }
+
 
 #nameInput::placeholder, #typingArea::placeholder {
     color: #888;

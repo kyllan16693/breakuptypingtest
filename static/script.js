@@ -83,12 +83,14 @@ document.addEventListener('DOMContentLoaded', async () => {
             nameInput.style.display = 'none';
             initialPrompt.style.display = 'none';
             typingPromptContainer.style.display = 'block';
+            typingArea.style.display = 'block';  // Show the text area
             typingArea.readOnly = false;
             typingArea.focus();
             startTime = new Date().getTime();
             console.log(`Test started at: ${new Date(startTime).toLocaleString()}`); // Log the start time
         }
     });
+    
 
     typingArea.addEventListener('input', () => {
         if (name !== '') {

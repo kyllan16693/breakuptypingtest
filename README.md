@@ -1,6 +1,5 @@
-# breakuptypingtest
-Breakup typing test
-
+# Breakup Typing Test
+Test your typing speed with a breakup message here: [http://breakuptypingtest.com/](http://breakuptypingtest.com/)
 
 
 ## Endpoints

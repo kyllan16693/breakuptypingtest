@@ -55,13 +55,13 @@ main {
 #initialPrompt .dear {
     margin-right: 10px;
     line-height: 22px;
+    padding-bottom: 20px;
 }
 
 #note {
     display: block;
     width: 100%;
     text-align: center;
-    margin-top: 10px;
     color: #888;
 }
 
@@ -112,6 +112,8 @@ main {
     margin-right: 5px;
     font-size: 22px;
     width: auto;
+    padding: 10px;
+    box-sizing: border-box;
     min-width: 4ch;
 }
 

@@ -7,17 +7,18 @@ WORKDIR /app
 # Copy requirements.txt file
 COPY requirements.txt .
 
-# Install requirements.txt
-RUN pip3 install -r requirements.txt
+# Install dependencies
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy rest of the files to app
-COPY . /app/
+# Copy the rest of the files to the working directory
+COPY . .
 
 # Make port 5000 available to the world outside this container
 EXPOSE 5000
 
-# Define environment variable
+# Define environment variables
 ENV FLASK_APP=app.py
+ENV FLASK_ENV=production
 
-# Run app.py when the container launches
-CMD ["flask", "run", "--host=0.0.0.0", "--port=5000"]
+# Run the application with Gunicorn
+CMD ["gunicorn", "--bind", "0.0.0.0:5000", "app:app"]

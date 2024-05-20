@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Fetch the typing prompt from the server
     async function fetchTypingPrompt(key = null) {
         try {
-            const response = await fetch(key ? `/prompt?key=${key}` : '/prompt');
+            const response = await fetch(key ? `/prompt/${key}` : '/prompt');
             const data = await response.json();
             promptKey = data.key;
             promptText = data.prompt;

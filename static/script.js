@@ -12,6 +12,17 @@ document.addEventListener('DOMContentLoaded', async () => {
     let promptKey = '';
     let promptText = '';
 
+    function adjustWidth() {
+        const text = nameInput.value || nameInput.placeholder;
+        textWidth.textContent = text;
+        nameInput.style.width = textWidth.offsetWidth + 20 + 'px';
+    }
+
+    nameInput.addEventListener('input', adjustWidth);
+
+    // Initial adjustment to fit the placeholder
+    adjustWidth();
+
     buttonContainer.id = 'buttonContainer';
     buttonContainer.style.display = 'none';
     buttonContainer.style.marginTop = '20px';

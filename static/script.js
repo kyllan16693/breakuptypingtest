@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const urlParams = new URLSearchParams(window.location.search);
     const key = urlParams.get('key');
-    await fetchTypingPrompt(key);
+    
 
     if (key) {
         newTestButtonContainer.style.display = 'block';
@@ -80,6 +80,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     nameInput.addEventListener('keydown', (event) => {
         if (event.key === 'Enter' && nameInput.value.trim() !== '') {
+            fetchTypingPrompt(key);
             event.preventDefault();
             name = nameInput.value.trim();
             console.log(`Name: ${name}`); // Log the name

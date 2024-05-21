@@ -51,8 +51,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     newTestButton.textContent = 'Take a New Test';
     newTestButton.classList.add('styled-button');  // Add the class
     newTestButtonContainer.appendChild(newTestButton);
-    
-    
+
+
 
     async function fetchTypingPrompt(key = null) {
         try {
@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const urlParams = new URLSearchParams(window.location.search);
     const key = urlParams.get('key');
-    
+
 
     if (key) {
         newTestButtonContainer.style.display = 'block';
@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             console.log(`Test started at: ${new Date(startTime).toLocaleString()}`); // Log the start time
         }
     });
-    
+
 
     typingArea.addEventListener('input', () => {
         if (name !== '') {
@@ -159,11 +159,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                             console.error('Error sharing', error);
                         });
                     } else {
-                        navigator.clipboard.writeText(breakupMessage).then(() => {
-                            alert('Breakup message copied to clipboard!');
-                        }).catch(err => {
-                            console.error('Error copying message:', err);
-                        });
+                        copyToClipboard(breakupMessage);
                     }
                 });
 
@@ -179,13 +175,32 @@ document.addEventListener('DOMContentLoaded', async () => {
                             console.error('Error sharing', error);
                         });
                     } else {
-                        navigator.clipboard.writeText(statsMessage).then(() => {
-                            alert('Stats copied to clipboard!');
-                        }).catch(err => {
-                            console.error('Error copying stats:', err);
-                        });
+                        copyToClipboard(statsMessage);
                     }
                 });
+
+                function copyToClipboard(text) {
+                    if (navigator.clipboard) {
+                        navigator.clipboard.writeText(text).then(() => {
+                            alert('Message copied to clipboard!');
+                        }).catch(err => {
+                            console.error('Error copying message:', err);
+                        });
+                    } else {
+                        // Fallback method for unsupported browsers
+                        let textArea = document.createElement("textarea");
+                        textArea.value = text;
+                        document.body.appendChild(textArea);
+                        textArea.select();
+                        try {
+                            document.execCommand('copy');
+                            alert('Message copied to clipboard!');
+                        } catch (err) {
+                            console.error('Error copying message:', err);
+                        }
+                        document.body.removeChild(textArea);
+                    }
+                }
 
                 takeAnotherTestButton.addEventListener('click', () => {
                     window.location.reload();
